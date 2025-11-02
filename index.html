@@ -3,47 +3,30 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>9月6日10時までカウントダウン</title>
+  <title>9月6日10時までカウントダウン（JST）</title>
   <style>
-    /* ===== Neo-Gothic Mobile Theme ===== */
+    /* ===== Neo-Gothic Mobile Theme (jitter-free) ===== */
     :root{
-      /* 深い黒と妖しい紫（コントラスト高め） */
-      --bg: #0a0a0b;
-      --bg-deep:#050507;
-      --card:#0f1015;
-      --ink:#ece9ff;
-      --muted:#a7a1bf;
-      --accent:#b08cff;      /* 輝きの紫 */
-      --accent-2:#6d3ccf;    /* 影の紫 */
-      --border:#2a2140;
+      --ghost-pad: .6ch;
+      --bg:#0a0a0b; --bg-deep:#050507; --card:#0f1015;
+      --ink:#ece9ff; --muted:#a7a1bf; --accent:#b08cff; --border:#2a2140;
       --glow: rgba(176,140,255,.28);
-
-      /* Fluid type（スマホ→タブレットで自然拡大） */
       --fs-body: clamp(14px, 3.6vw, 17px);
       --fs-label: clamp(11px, 2.9vw, 13px);
       --fs-title: clamp(20px, 6.2vw, 30px);
-      --fs-value: clamp(24px, 8.2vw, 44px);
-
-      /* Spacing */
-      --s-1: 8px; --s-2: 12px; --s-3: 16px; --s-4: 20px; --s-5: 24px;
-      --radius: 18px; --radius-lg: 22px;
-      --grid-gap: 12px; --container-pad: 16px;
+      --fs-value: clamp(22px, 8.2vw, 44px); /* 固定最大。もう動かさない */
+      --s-1:8px; --s-2:12px; --s-3:16px; --s-4:20px;
+      --radius-lg:22px; --grid-gap:12px; --container-pad:16px;
     }
-
-    /* ダークをベース固定（端末設定に左右されない） */
-    html { color-scheme: dark; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-
+    html{ color-scheme:dark; -webkit-text-size-adjust:80%; text-size-adjust:80%; }
     body{
       margin:0; min-height:100svh; color:var(--ink);
-      font-family: "BIZ UDPGothic","Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif;
+      font-family:"BIZ UDPGothic","Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif;
       font-size:var(--fs-body); line-height:1.75;
-
-      /* 重ねる背景：周辺減光＋紫のヴェール */
       background:
         radial-gradient(1100px 700px at 50% -10%, rgba(176,140,255,.07), transparent 60%),
         radial-gradient(800px 600px at 0% 100%, rgba(109,60,207,.06), transparent 60%),
         linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
-
       display:grid; place-items:start center;
       padding:
         calc(env(safe-area-inset-top) + var(--container-pad))
@@ -51,98 +34,58 @@
         calc(env(safe-area-inset-bottom) + var(--container-pad))
         calc(env(safe-area-inset-left) + var(--container-pad));
     }
-
-    /* さりげない全体フレーム（内側に光の筋） */
-    .wrap{
-      width:min(980px,100%);
-      display:grid; gap:var(--s-4); position:relative;
-    }
+    .wrap{ width:min(980px,100%); display:grid; gap:var(--s-4); position:relative; }
     .wrap::before{
-      content:""; position:absolute; inset:-8px;
-      border-radius:28px;
-      pointer-events:none;
-      box-shadow:
-        0 0 0 1px rgba(176,140,255,.18) inset,
-        0 0 64px rgba(176,140,255,.07) inset;
-      /* ビネット感を強化 */
-      background:
-        radial-gradient(1200px 600px at 50% 0%, rgba(176,140,255,.05), transparent 60%);
-      mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
-      padding:8px; /* 見た目の額縁スペース */
+      content:""; position:absolute; inset:-8px; border-radius:28px; pointer-events:none;
+      box-shadow:0 0 0 1px rgba(176,140,255,.18) inset, 0 0 64px rgba(176,140,255,.07) inset;
+      background: radial-gradient(1200px 600px at 50% 0%, rgba(176,140,255,.05), transparent 60%);
+      mask:linear-gradient(#000,#000) content-box, linear-gradient(#000,#000); padding:8px;
     }
-
-    h1{
-      margin:0; font-size:var(--fs-title); line-height:1.25; letter-spacing:.4px;
-      text-wrap:balance;
-      /* タイトルは微発光＋細い下線 */
-      text-shadow: 0 0 18px var(--glow), 0 0 2px rgba(176,140,255,.35);
-      border-bottom:1px solid var(--border);
-      padding-bottom:8px;
-    }
-
+    h1{ margin:0; font-size:var(--fs-title); line-height:1.25; letter-spacing:.4px;
+        text-wrap:balance; text-shadow:0 0 18px var(--glow),0 0 2px rgba(176,140,255,.35);
+        border-bottom:1px solid var(--border); padding-bottom:8px; }
     .target{ margin:0; color:var(--muted); letter-spacing:.2px; }
 
-    /* ===== Cards grid ===== */
     .grid{ display:grid; gap:var(--grid-gap); grid-template-columns:1fr; }
     @media (min-width:640px){ .grid{ grid-template-columns:1fr 1fr; } }
     .card{
-      position:relative;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-      border:1px solid var(--border);
-      border-radius:var(--radius-lg);
-      padding:14px 16px;
-      box-shadow:
-        0 0 0 1px rgba(176,140,255,.14) inset,
-        0 14px 36px rgba(0,0,0,.45);
-      touch-action: manipulation;
-      overflow:hidden;
-      isolation:isolate; /* 内部エフェクトを閉じ込める */
+      position:relative; background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border:1px solid var(--border); border-radius:var(--radius-lg); padding:14px 16px;
+      box-shadow:0 0 0 1px rgba(176,140,255,.14) inset, 0 14px 36px rgba(0,0,0,.45);
+      touch-action:manipulation; overflow:hidden; isolation:isolate;
     }
     .card.full{ grid-column:1 / -1; }
-
-    /* カード角に“装飾ライン”を追加（控えめ） */
-    .card::before, .card::after{
-      content:""; position:absolute; pointer-events:none; opacity:.8;
+    .card::before,.card::after{
+      content:""; position:absolute; pointer-events:none; opacity:.8; height:1px; width:55%;
       background:linear-gradient(90deg, transparent, var(--accent) 35%, transparent);
-      height:1px; width:55%;
       left:16px; top:10px; filter:blur(.2px);
     }
-    .card::after{
-      left:auto; right:16px; bottom:10px; top:auto;
-      background:linear-gradient(90deg, transparent, var(--accent) 35%, transparent);
-    }
+    .card::after{ left:auto; right:16px; top:auto; bottom:10px; }
 
-    .label{
-      font-size:var(--fs-label); color:var(--muted);
-      margin:0 0 var(--s-1); letter-spacing:.35px;
-      text-transform:none; /* 日本語は大文字化しない */
-    }
+    .label{ font-size:var(--fs-label); color:var(--muted); margin:0 0 var(--s-1); letter-spacing:.35px; }
 
+    /* ===== 揺れない値表示：ゴースト幅予約 + 絶対配置テキスト ===== */
     .value{
+      position:relative;
       font-size:var(--fs-value); font-weight:800; line-height:1.1; letter-spacing:.02em;
-      font-variant-numeric: tabular-nums lining-nums;
-      font-feature-settings: "tnum" 1, "lnum" 1;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-      /* 数字に妖しい微発光 */
-      text-shadow:
-        0 0 22px var(--glow),
-        0 0 2px rgba(176,140,255,.45);
-      transition: opacity .18s ease, transform .12s ease;
+      font-variant-numeric:tabular-nums lining-nums; font-feature-settings:"tnum"1,"lnum"1;
+      white-space:nowrap; overflow:visible; text-overflow:clip;
+      text-shadow:0 0 22px var(--glow), 0 0 2px rgba(176,140,255,.45);
     }
-
-    /* 更新の瞬間にごく軽い揺らぎを与えて生気を出す */
-    .value[data-pulse="1"]{ transform: translateY(-.5px); }
-
-    footer{
-      margin-top:var(--s-3);
-      font-size:clamp(11px, 2.8vw, 12px);
-      color:var(--muted);
-      border-top:1px solid var(--border);
-      padding-top:10px;
+    .value .text{
+      position:absolute; inset:0; /* 幅はゴーストに合わせる */
     }
+    .value .ghost{
+      visibility: hidden;
+      user-select: none;
+      pointer-events: none;
+      margin-inline-end: var(--ghost-pad);
+    }
+    .value[data-pulse="1"] .text{ transform:translateY(-.5px); transition:transform .12s ease; }
 
-    *{ -webkit-tap-highlight-color: transparent; }
+    footer{ margin-top:var(--s-3); font-size:clamp(11px,2.8vw,12px); color:var(--muted);
+            border-top:1px solid var(--border); padding-top:10px; }
+    *{ -webkit-tap-highlight-color:transparent; }
     ::selection{ background: color-mix(in oklch, var(--accent) 35%, transparent); }
   </style>
 </head>
@@ -154,119 +97,163 @@
     <div class="grid">
       <div class="card full">
         <div class="label">① ヶ月・日・時間・分・秒</div>
-        <div id="p1" class="value">—</div>
+        <div class="value"><span id="p1" class="text">—</span><span id="g1" class="ghost">—</span></div>
       </div>
       <div class="card">
         <div class="label">② 日・時間・分・秒</div>
-        <div id="p2" class="value">—</div>
+        <div class="value"><span id="p2" class="text">—</span><span id="g2" class="ghost">—</span></div>
       </div>
       <div class="card">
         <div class="label">③ 時間・分・秒（総時間）</div>
-        <div id="p3" class="value">—</div>
+        <div class="value"><span id="p3" class="text">—</span><span id="g3" class="ghost">—</span></div>
       </div>
       <div class="card">
         <div class="label">④ 分・秒（総分）</div>
-        <div id="p4" class="value">—</div>
+        <div class="value"><span id="p4" class="text">—</span><span id="g4" class="ghost">—</span></div>
       </div>
       <div class="card">
         <div class="label">⑤ 秒（総秒）</div>
-        <div id="p5" class="value">—</div>
+        <div class="value"><span id="p5" class="text">—</span><span id="g5" class="ghost">—</span></div>
       </div>
     </div>
+
+    <footer>JST固定／今年の9月6日10:00を過ぎていたら来年を自動採用。URLに <code>?year=2027</code> を付けると年固定。</footer>
   </div>
 
   <script>
-    /* ===== JS（前回と同じ） ===== */
-    const TARGET_MONTH = 9;   // 9月
-    const TARGET_DAY   = 6;   // 6日
-    const TARGET_HOUR  = 10;  // 10時（JST）
-    const JST_OFFSET = 9 * 60 * 60 * 1000;
-    const DAY_MS  = 24 * 60 * 60 * 1000;
-    const HOUR_MS = 60 * 60 * 1000;
-    const MIN_MS  = 60 * 1000;
-    const $ = (id) => document.getElementById(id);
-    function nowJST(){ return new Date(Date.now() + JST_OFFSET); }
-    function makeJST(y, m, d, hh=0, mm=0, ss=0, ms=0){ return new Date(Date.UTC(y, m - 1, d, hh, mm, ss, ms)); }
-    function daysInMonthJST(y, m0){ return new Date(Date.UTC(y, m0 + 1, 0)).getUTCDate(); }
+    /* ===== 設定 ===== */
+    const TARGET_MONTH = 9, TARGET_DAY = 6, TARGET_HOUR = 10; // JST
+    const JST_OFFSET = 9*60*60*1000, DAY_MS=86400000, HOUR_MS=3600000, MIN_MS=60000;
+
+    const $ = (id)=>document.getElementById(id);
+
+    /* JST helpers */
+    function nowJST(){ return new Date(Date.now()+JST_OFFSET); }
+    function makeJST(y,m,d,hh=0,mm=0,ss=0,ms=0){ return new Date(Date.UTC(y,m-1,d,hh,mm,ss,ms)); }
+    function daysInMonthJST(y,m0){ return new Date(Date.UTC(y,m0+1,0)).getUTCDate(); }
     function addMonthsJST(dateJST, add){
-      let y = dateJST.getUTCFullYear(), m = dateJST.getUTCMonth(), d = dateJST.getUTCDate();
-      const hh = dateJST.getUTCHours(), mm = dateJST.getUTCMinutes(), ss = dateJST.getUTCSeconds(), ms = dateJST.getUTCMilliseconds();
-      m += add; y += Math.floor(m / 12); m = (m % 12 + 12) % 12;
-      const dim = daysInMonthJST(y, m); if (d > dim) d = dim;
-      return new Date(Date.UTC(y, m, d, hh, mm, ss, ms));
+      let y=dateJST.getUTCFullYear(), m=dateJST.getUTCMonth(), d=dateJST.getUTCDate();
+      const hh=dateJST.getUTCHours(), mm=dateJST.getUTCMinutes(), ss=dateJST.getUTCSeconds(), ms=dateJST.getUTCMilliseconds();
+      m+=add; y+=Math.floor(m/12); m=(m%12+12)%12; const dim=daysInMonthJST(y,m); if(d>dim)d=dim;
+      return new Date(Date.UTC(y,m,d,hh,mm,ss,ms));
     }
     function decideTargetYear(){
-      const url = new URL(location.href); const yParam = url.searchParams.get("year");
-      if (yParam && /^\d{4}$/.test(yParam)) return parseInt(yParam, 10);
-      const now = nowJST(); const y = now.getUTCFullYear();
-      const thisYear = makeJST(y, TARGET_MONTH, TARGET_DAY, TARGET_HOUR, 0, 0, 0);
-      return (thisYear.getTime() > now.getTime()) ? y : (y + 1);
+      const yParam=new URL(location.href).searchParams.get("year");
+      if (yParam && /^\d{4}$/.test(yParam)) return +yParam;
+      const now=nowJST(), y=now.getUTCFullYear();
+      const thisYear=makeJST(y,TARGET_MONTH,TARGET_DAY,TARGET_HOUR,0,0,0);
+      return thisYear.getTime()>now.getTime()? y : y+1;
     }
-    const TARGET_YEAR = decideTargetYear();
-    const TARGET = makeJST(TARGET_YEAR, TARGET_MONTH, TARGET_DAY, TARGET_HOUR, 0, 0, 0);
+
+    const TARGET_YEAR=decideTargetYear();
+    const TARGET=makeJST(TARGET_YEAR,TARGET_MONTH,TARGET_DAY,TARGET_HOUR,0,0,0);
+
     function weekdayJa(dJST){ return ["日","月","火","水","木","金","土"][dJST.getUTCDay()]; }
     function pad2(n){ return String(n).padStart(2,"0"); }
-    function breakdownMonthsDays(startJST, endJST){
-      if (endJST <= startJST) return {months:0, days:0, hours:0, minutes:0, seconds:0};
-      let months = 0, cursor = new Date(startJST.getTime());
-      while (true) {
-        const next = addMonthsJST(cursor, 1);
-        if (next.getTime() <= endJST.getTime()) { months++; cursor = next; } else break;
-      }
-      let ms = endJST.getTime() - cursor.getTime();
-      const days = Math.floor(ms / DAY_MS);  ms -= days * DAY_MS;
-      const hours = Math.floor(ms / HOUR_MS); ms -= hours * HOUR_MS;
-      const minutes = Math.floor(ms / MIN_MS); ms -= minutes * MIN_MS;
-      const seconds = Math.floor(ms / 1000);
-      return {months, days, hours, minutes, seconds};
+
+    function breakdownMonthsDays(startJST,endJST){
+      if(endJST<=startJST) return {months:0,days:0,hours:0,minutes:0,seconds:0};
+      let months=0, cursor=new Date(startJST.getTime());
+      while(true){ const next=addMonthsJST(cursor,1); if(next.getTime()<=endJST.getTime()){ months++; cursor=next; } else break; }
+      let ms=endJST.getTime()-cursor.getTime();
+      const days=Math.floor(ms/DAY_MS);  ms-=days*DAY_MS;
+      const hours=Math.floor(ms/HOUR_MS); ms-=hours*HOUR_MS;
+      const minutes=Math.floor(ms/MIN_MS); ms-=minutes*MIN_MS;
+      const seconds=Math.floor(ms/1000);
+      return {months,days,hours,minutes,seconds};
     }
-    const elTarget=$("targetText"), el1=$("p1"), el2=$("p2"), el3=$("p3"), el4=$("p4"), el5=$("p5");
+
+    /* 目標行 */
     function renderTargetLine(){
-      const y = TARGET.getUTCFullYear(), m = TARGET.getUTCMonth()+1, d = TARGET.getUTCDate();
-      const w = weekdayJa(TARGET), hh = pad2(TARGET.getUTCHours()), mm = pad2(TARGET.getUTCMinutes());
-      elTarget.textContent = `開店日: ${y}年${m}月${d}日（${w}） ${hh}:${mm} JST`;
+      const y=TARGET.getUTCFullYear(), m=TARGET.getUTCMonth()+1, d=TARGET.getUTCDate();
+      const w=weekdayJa(TARGET), hh=pad2(TARGET.getUTCHours()), mm=pad2(TARGET.getUTCMinutes());
+      $("targetText").textContent = `目標: ${y}年${m}月${d}日（${w}） ${hh}:${mm} JST`;
     }
     renderTargetLine();
+
+    /* ===== ゴースト（最大幅）セットアップ =====
+       初期時点での最大想定値を使って不可視の文字列を置き、幅を固定する。
+    */
+    function setupGhosts(){
+      const now = nowJST();
+      const diffMs = Math.max(0, TARGET.getTime() - now.getTime());
+
+      const maxDays    = Math.ceil(diffMs / DAY_MS);
+      const maxHours   = Math.ceil(diffMs / HOUR_MS);
+      const maxMinutes = Math.ceil(diffMs / MIN_MS);
+      const maxSeconds = Math.ceil(diffMs / 1000);
+
+      // ① は各2桁固定でOK（months 0-11, days < 31, h<24, m/s<60）
+      $("g1").textContent = `88ヶ月88日88時間88分88秒`;
+      // ② 日は桁数が可変 → 最大桁で確保
+      $("g2").textContent = `${"8".repeat(String(maxDays).length)}日88時間88分88秒`;
+      // ③ 総時間は可変桁
+      $("g3").textContent = `${"8".repeat(String(maxHours).length)}時間88分88秒`;
+      // ④ 総分は可変桁
+      $("g4").textContent = `${"8".repeat(String(maxMinutes).length)}分88秒`;
+      // ⑤ 総秒は可変桁
+      $("g5").textContent = `${"8".repeat(String(maxSeconds).length)}秒`;
+    }
+    setupGhosts();
+
+    /* ===== カウントダウン ===== */
+    const el1=$("p1"), el2=$("p2"), el3=$("p3"), el4=$("p4"), el5=$("p5");
+    const VALUES=[el1,el2,el3,el4,el5].map(el=>el.parentElement); // .value 要素
+
+    let lastSec = -1;
     function tick(){
       const now = nowJST();
-      let diffMs = TARGET.getTime() - now.getTime();
+      const diffMs = TARGET.getTime() - now.getTime();
+      const secWhole = Math.max(0, Math.floor(diffMs / 1000));
+      if (secWhole === lastSec) return; // 1秒単位で更新
+      lastSec = secWhole;
+
       const pulse = diffMs > 0 ? "1" : "0";
-      [el1, el2, el3, el4, el5].forEach(el => el.setAttribute("data-pulse", pulse));
-      if (diffMs <= 0) {
-        el1.textContent=`0ヶ月0日0時間0分0秒`;
-        el2.textContent=`0日0時間0分0秒`;
-        el3.textContent=`0時間0分0秒`;
-        el4.textContent=`0分0秒`;
+      VALUES.forEach(el => el.setAttribute("data-pulse", pulse));
+
+      if (diffMs <= 0){
+        el1.textContent=`00ヶ月00日00時間00分00秒`;
+        el2.textContent=`0日00時間00分00秒`;
+        el3.textContent=`0時間00分00秒`;
+        el4.textContent=`0分00秒`;
         el5.textContent=`0秒`;
         return;
       }
+
+      // ① ヶ月・日・時間・分・秒（各2桁にパディングして幅を固定）
       const md = breakdownMonthsDays(now, TARGET);
-      el1.textContent = `${md.months}ヶ月${md.days}日${md.hours}時間${md.minutes}分${md.seconds}秒`;
+      el1.textContent = `${pad2(md.months)}ヶ月${pad2(md.days)}日${pad2(md.hours)}時間${pad2(md.minutes)}分${pad2(md.seconds)}秒`;
+
+      // ② 日・時間・分・秒（時間/分/秒は2桁固定）
       let ms = diffMs;
-      const days = Math.floor(ms / DAY_MS);  ms -= days * DAY_MS;
-      const hours = Math.floor(ms / HOUR_MS); ms -= hours * HOUR_MS;
-      const minutes = Math.floor(ms / MIN_MS); ms -= minutes * MIN_MS;
-      const seconds = Math.floor(ms / 1000);
-      el2.textContent = `${days}日${hours}時間${minutes}分${seconds}秒`;
+      const d2 = Math.floor(ms/DAY_MS); ms -= d2*DAY_MS;
+      const h2 = Math.floor(ms/HOUR_MS); ms -= h2*HOUR_MS;
+      const m2 = Math.floor(ms/MIN_MS);  ms -= m2*MIN_MS;
+      const s2 = Math.floor(ms/1000);
+      el2.textContent = `${d2}日${pad2(h2)}時間${pad2(m2)}分${pad2(s2)}秒`;
+
+      // ③ 時間・分・秒（総時間は可変桁／分秒は2桁）
       ms = diffMs;
-      const totalHours = Math.floor(ms / HOUR_MS); ms -= totalHours * HOUR_MS;
-      const m3 = Math.floor(ms / MIN_MS); ms -= m3 * MIN_MS;
-      const s3 = Math.floor(ms / 1000);
-      el3.textContent = `${totalHours}時間${m3}分${s3}秒`;
+      const th = Math.floor(ms/HOUR_MS); ms -= th*HOUR_MS;
+      const m3 = Math.floor(ms/MIN_MS);  ms -= m3*MIN_MS;
+      const s3 = Math.floor(ms/1000);
+      el3.textContent = `${th}時間${pad2(m3)}分${pad2(s3)}秒`;
+
+      // ④ 分・秒（総分は可変桁／秒は2桁）
       ms = diffMs;
-      const totalMinutes = Math.floor(ms / MIN_MS); ms -= totalMinutes * MIN_MS;
-      const s4 = Math.floor(ms / 1000);
-      el4.textContent = `${totalMinutes}分${s4}秒`;
-      const totalSeconds = Math.floor(diffMs / 1000);
-      el5.textContent = `${totalSeconds}秒`;
+      const tm = Math.floor(ms/MIN_MS); ms -= tm*MIN_MS;
+      const s4 = Math.floor(ms/1000);
+      el4.textContent = `${tm}分${pad2(s4)}秒`;
+
+      // ⑤ 秒（総秒は可変桁）
+      el5.textContent = `${secWhole}秒`;
     }
+
+    // タイマー（前面=200ms/背景=1000msだが描画は1秒単位）
     let intervalId=null;
-    function startTimer(intervalMs){
-      if (intervalId) clearInterval(intervalId);
-      intervalId=setInterval(() => { tick(); }, intervalMs);
-    }
+    function startTimer(ms){ if(intervalId)clearInterval(intervalId); intervalId=setInterval(tick, ms); }
     tick(); startTimer(200);
-    document.addEventListener("visibilitychange", () => startTimer(document.hidden?1000:200));
+    document.addEventListener("visibilitychange", ()=> startTimer(document.hidden?1000:200));
   </script>
 </body>
 </html>
