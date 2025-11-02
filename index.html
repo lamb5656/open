@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>9月6日10時までカウントダウン（JST）</title>
+  <title>9月6日10時までカウントダウン</title>
   <style>
     /* ===== Neo-Gothic Mobile Theme (jitter-free) ===== */
     :root{
@@ -116,8 +116,6 @@
         <div class="value"><span id="p5" class="text">—</span><span id="g5" class="ghost">—</span></div>
       </div>
     </div>
-
-    <footer>JST固定／今年の9月6日10:00を過ぎていたら来年を自動採用。URLに <code>?year=2027</code> を付けると年固定。</footer>
   </div>
 
   <script>
@@ -167,7 +165,7 @@
     function renderTargetLine(){
       const y=TARGET.getUTCFullYear(), m=TARGET.getUTCMonth()+1, d=TARGET.getUTCDate();
       const w=weekdayJa(TARGET), hh=pad2(TARGET.getUTCHours()), mm=pad2(TARGET.getUTCMinutes());
-      $("targetText").textContent = `目標: ${y}年${m}月${d}日（${w}） ${hh}:${mm} JST`;
+      $("targetText").textContent = `開店日時: ${y}年${m}月${d}日（${w}） ${hh}:${mm} JST`;
     }
     renderTargetLine();
 
@@ -257,3 +255,4 @@
   </script>
 </body>
 </html>
+
