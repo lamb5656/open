@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>9月6日10時までカウントダウン</title>
+  <style>
+    /* ===== Neo-Gothic Mobile Theme ===== */
+    :root{
+      /* 深い黒と妖しい紫（コントラスト高め） */
+      --bg: #0a0a0b;
+      --bg-deep:#050507;
+      --card:#0f1015;
+      --ink:#ece9ff;
+      --muted:#a7a1bf;
+      --accent:#b08cff;      /* 輝きの紫 */
+      --accent-2:#6d3ccf;    /* 影の紫 */
+      --border:#2a2140;
+      --glow: rgba(176,140,255,.28);
+
+      /* Fluid type（スマホ→タブレットで自然拡大） */
+      --fs-body: clamp(14px, 3.6vw, 17px);
+      --fs-label: clamp(11px, 2.9vw, 13px);
+      --fs-title: clamp(20px, 6.2vw, 30px);
+      --fs-value: clamp(24px, 8.2vw, 44px);
+
+      /* Spacing */
+      --s-1: 8px; --s-2: 12px; --s-3: 16px; --s-4: 20px; --s-5: 24px;
+      --radius: 18px; --radius-lg: 22px;
+      --grid-gap: 12px; --container-pad: 16px;
+    }
+
+    /* ダークをベース固定（端末設定に左右されない） */
+    html { color-scheme: dark; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+    body{
+      margin:0; min-height:100svh; color:var(--ink);
+      font-family: "BIZ UDPGothic","Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif;
+      font-size:var(--fs-body); line-height:1.75;
+
+      /* 重ねる背景：周辺減光＋紫のヴェール */
+      background:
+        radial-gradient(1100px 700px at 50% -10%, rgba(176,140,255,.07), transparent 60%),
+        radial-gradient(800px 600px at 0% 100%, rgba(109,60,207,.06), transparent 60%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+
+      display:grid; place-items:start center;
+      padding:
+        calc(env(safe-area-inset-top) + var(--container-pad))
+        calc(env(safe-area-inset-right) + var(--container-pad))
+        calc(env(safe-area-inset-bottom) + var(--container-pad))
+        calc(env(safe-area-inset-left) + var(--container-pad));
+    }
+
+    /* さりげない全体フレーム（内側に光の筋） */
+    .wrap{
+      width:min(980px,100%);
+      display:grid; gap:var(--s-4); position:relative;
+    }
+    .wrap::before{
+      content:""; position:absolute; inset:-8px;
+      border-radius:28px;
+      pointer-events:none;
+      box-shadow:
+        0 0 0 1px rgba(176,140,255,.18) inset,
+        0 0 64px rgba(176,140,255,.07) inset;
+      /* ビネット感を強化 */
+      background:
+        radial-gradient(1200px 600px at 50% 0%, rgba(176,140,255,.05), transparent 60%);
+      mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+      padding:8px; /* 見た目の額縁スペース */
+    }
+
+    h1{
+      margin:0; font-size:var(--fs-title); line-height:1.25; letter-spacing:.4px;
+      text-wrap:balance;
+      /* タイトルは微発光＋細い下線 */
+      text-shadow: 0 0 18px var(--glow), 0 0 2px rgba(176,140,255,.35);
+      border-bottom:1px solid var(--border);
+      padding-bottom:8px;
+    }
+
+    .target{ margin:0; color:var(--muted); letter-spacing:.2px; }
+
+    /* ===== Cards grid ===== */
+    .grid{ display:grid; gap:var(--grid-gap); grid-template-columns:1fr; }
+    @media (min-width:640px){ .grid{ grid-template-columns:1fr 1fr; } }
+    .card{
+      position:relative;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border:1px solid var(--border);
+      border-radius:var(--radius-lg);
+      padding:14px 16px;
+      box-shadow:
+        0 0 0 1px rgba(176,140,255,.14) inset,
+        0 14px 36px rgba(0,0,0,.45);
+      touch-action: manipulation;
+      overflow:hidden;
+      isolation:isolate; /* 内部エフェクトを閉じ込める */
+    }
+    .card.full{ grid-column:1 / -1; }
+
+    /* カード角に“装飾ライン”を追加（控えめ） */
+    .card::before, .card::after{
+      content:""; position:absolute; pointer-events:none; opacity:.8;
+      background:linear-gradient(90deg, transparent, var(--accent) 35%, transparent);
+      height:1px; width:55%;
+      left:16px; top:10px; filter:blur(.2px);
+    }
+    .card::after{
+      left:auto; right:16px; bottom:10px; top:auto;
+      background:linear-gradient(90deg, transparent, var(--accent) 35%, transparent);
+    }
+
+    .label{
+      font-size:var(--fs-label); color:var(--muted);
+      margin:0 0 var(--s-1); letter-spacing:.35px;
+      text-transform:none; /* 日本語は大文字化しない */
+    }
+
+    .value{
+      font-size:var(--fs-value); font-weight:800; line-height:1.1; letter-spacing:.02em;
+      font-variant-numeric: tabular-nums lining-nums;
+      font-feature-settings: "tnum" 1, "lnum" 1;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      /* 数字に妖しい微発光 */
+      text-shadow:
+        0 0 22px var(--glow),
+        0 0 2px rgba(176,140,255,.45);
+      transition: opacity .18s ease, transform .12s ease;
+    }
+
+    /* 更新の瞬間にごく軽い揺らぎを与えて生気を出す */
+    .value[data-pulse="1"]{ transform: translateY(-.5px); }
+
+    footer{
+      margin-top:var(--s-3);
+      font-size:clamp(11px, 2.8vw, 12px);
+      color:var(--muted);
+      border-top:1px solid var(--border);
+      padding-top:10px;
+    }
+
+    *{ -webkit-tap-highlight-color: transparent; }
+    ::selection{ background: color-mix(in oklch, var(--accent) 35%, transparent); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>9月6日10時までのカウントダウン</h1>
+    <p id="targetText" class="target"></p>
+
+    <div class="grid">
+      <div class="card full">
+        <div class="label">① ヶ月・日・時間・分・秒</div>
+        <div id="p1" class="value">—</div>
+      </div>
+      <div class="card">
+        <div class="label">② 日・時間・分・秒</div>
+        <div id="p2" class="value">—</div>
+      </div>
+      <div class="card">
+        <div class="label">③ 時間・分・秒（総時間）</div>
+        <div id="p3" class="value">—</div>
+      </div>
+      <div class="card">
+        <div class="label">④ 分・秒（総分）</div>
+        <div id="p4" class="value">—</div>
+      </div>
+      <div class="card">
+        <div class="label">⑤ 秒（総秒）</div>
+        <div id="p5" class="value">—</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ===== JS（前回と同じ） ===== */
+    const TARGET_MONTH = 9;   // 9月
+    const TARGET_DAY   = 6;   // 6日
+    const TARGET_HOUR  = 10;  // 10時（JST）
+    const JST_OFFSET = 9 * 60 * 60 * 1000;
+    const DAY_MS  = 24 * 60 * 60 * 1000;
+    const HOUR_MS = 60 * 60 * 1000;
+    const MIN_MS  = 60 * 1000;
+    const $ = (id) => document.getElementById(id);
+    function nowJST(){ return new Date(Date.now() + JST_OFFSET); }
+    function makeJST(y, m, d, hh=0, mm=0, ss=0, ms=0){ return new Date(Date.UTC(y, m - 1, d, hh, mm, ss, ms)); }
+    function daysInMonthJST(y, m0){ return new Date(Date.UTC(y, m0 + 1, 0)).getUTCDate(); }
+    function addMonthsJST(dateJST, add){
+      let y = dateJST.getUTCFullYear(), m = dateJST.getUTCMonth(), d = dateJST.getUTCDate();
+      const hh = dateJST.getUTCHours(), mm = dateJST.getUTCMinutes(), ss = dateJST.getUTCSeconds(), ms = dateJST.getUTCMilliseconds();
+      m += add; y += Math.floor(m / 12); m = (m % 12 + 12) % 12;
+      const dim = daysInMonthJST(y, m); if (d > dim) d = dim;
+      return new Date(Date.UTC(y, m, d, hh, mm, ss, ms));
+    }
+    function decideTargetYear(){
+      const url = new URL(location.href); const yParam = url.searchParams.get("year");
+      if (yParam && /^\d{4}$/.test(yParam)) return parseInt(yParam, 10);
+      const now = nowJST(); const y = now.getUTCFullYear();
+      const thisYear = makeJST(y, TARGET_MONTH, TARGET_DAY, TARGET_HOUR, 0, 0, 0);
+      return (thisYear.getTime() > now.getTime()) ? y : (y + 1);
+    }
+    const TARGET_YEAR = decideTargetYear();
+    const TARGET = makeJST(TARGET_YEAR, TARGET_MONTH, TARGET_DAY, TARGET_HOUR, 0, 0, 0);
+    function weekdayJa(dJST){ return ["日","月","火","水","木","金","土"][dJST.getUTCDay()]; }
+    function pad2(n){ return String(n).padStart(2,"0"); }
+    function breakdownMonthsDays(startJST, endJST){
+      if (endJST <= startJST) return {months:0, days:0, hours:0, minutes:0, seconds:0};
+      let months = 0, cursor = new Date(startJST.getTime());
+      while (true) {
+        const next = addMonthsJST(cursor, 1);
+        if (next.getTime() <= endJST.getTime()) { months++; cursor = next; } else break;
+      }
+      let ms = endJST.getTime() - cursor.getTime();
+      const days = Math.floor(ms / DAY_MS);  ms -= days * DAY_MS;
+      const hours = Math.floor(ms / HOUR_MS); ms -= hours * HOUR_MS;
+      const minutes = Math.floor(ms / MIN_MS); ms -= minutes * MIN_MS;
+      const seconds = Math.floor(ms / 1000);
+      return {months, days, hours, minutes, seconds};
+    }
+    const elTarget=$("targetText"), el1=$("p1"), el2=$("p2"), el3=$("p3"), el4=$("p4"), el5=$("p5");
+    function renderTargetLine(){
+      const y = TARGET.getUTCFullYear(), m = TARGET.getUTCMonth()+1, d = TARGET.getUTCDate();
+      const w = weekdayJa(TARGET), hh = pad2(TARGET.getUTCHours()), mm = pad2(TARGET.getUTCMinutes());
+      elTarget.textContent = `開店日: ${y}年${m}月${d}日（${w}） ${hh}:${mm} JST`;
+    }
+    renderTargetLine();
+    function tick(){
+      const now = nowJST();
+      let diffMs = TARGET.getTime() - now.getTime();
+      const pulse = diffMs > 0 ? "1" : "0";
+      [el1, el2, el3, el4, el5].forEach(el => el.setAttribute("data-pulse", pulse));
+      if (diffMs <= 0) {
+        el1.textContent=`0ヶ月0日0時間0分0秒`;
+        el2.textContent=`0日0時間0分0秒`;
+        el3.textContent=`0時間0分0秒`;
+        el4.textContent=`0分0秒`;
+        el5.textContent=`0秒`;
+        return;
+      }
+      const md = breakdownMonthsDays(now, TARGET);
+      el1.textContent = `${md.months}ヶ月${md.days}日${md.hours}時間${md.minutes}分${md.seconds}秒`;
+      let ms = diffMs;
+      const days = Math.floor(ms / DAY_MS);  ms -= days * DAY_MS;
+      const hours = Math.floor(ms / HOUR_MS); ms -= hours * HOUR_MS;
+      const minutes = Math.floor(ms / MIN_MS); ms -= minutes * MIN_MS;
+      const seconds = Math.floor(ms / 1000);
+      el2.textContent = `${days}日${hours}時間${minutes}分${seconds}秒`;
+      ms = diffMs;
+      const totalHours = Math.floor(ms / HOUR_MS); ms -= totalHours * HOUR_MS;
+      const m3 = Math.floor(ms / MIN_MS); ms -= m3 * MIN_MS;
+      const s3 = Math.floor(ms / 1000);
+      el3.textContent = `${totalHours}時間${m3}分${s3}秒`;
+      ms = diffMs;
+      const totalMinutes = Math.floor(ms / MIN_MS); ms -= totalMinutes * MIN_MS;
+      const s4 = Math.floor(ms / 1000);
+      el4.textContent = `${totalMinutes}分${s4}秒`;
+      const totalSeconds = Math.floor(diffMs / 1000);
+      el5.textContent = `${totalSeconds}秒`;
+    }
+    let intervalId=null;
+    function startTimer(intervalMs){
+      if (intervalId) clearInterval(intervalId);
+      intervalId=setInterval(() => { tick(); }, intervalMs);
+    }
+    tick(); startTimer(200);
+    document.addEventListener("visibilitychange", () => startTimer(document.hidden?1000:200));
+  </script>
+</body>
+</html>
